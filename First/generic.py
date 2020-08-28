@@ -7,8 +7,8 @@ from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.lang import Builder
 from kivy.uix.label import Label
-from kivy.uix.button import Button
-from functools import partial
+# from kivy.uix.button import Button
+# from functools import partial
 
 Builder.load_string("""
 
@@ -111,31 +111,52 @@ class Generic(App):
         Wrapper for building multiple types of windows.
     '''
 
-    def __init__(self, appname="label", text="Hello Kivy World"):
+    def __init__(self, appname="label", text="Hello World"):
         '''
             Blah blah blah.
         '''
-#       if appname == "button":
-#           from kivy.uix.button import Button
-#           self.build = Button()
-#       elif appname == "label":
-#           from kivy.uix.label import Label
-#           self.build = Label
+        self.__build__ = 0
+        if appname == "button":
+            from kivy.uix.button import Button
+            self.__build__ = Button
+            self.set_args = self.__keywords_button__
+        elif appname == "label":
+            from kivy.uix.label import Label
+            self.__build__ = Label
+            self.set_args = self.__keywords_label__
 
-        self.build = Label()
         self.text = text
+        self.key_words = dict()
+        self.set_args()
         super().__init__()
+
+    def __keywords_button__(self):
+        self.key_words["markup"] = False
+
+    def __keywords_label__(self):
+        self.key_words["text"] = "[u][color=ff0066][b]Better days[/b][/color] are coming; They are called [i][color=ff9933]Saturday[/i] and [i]Sunday[/color][/i][/u]"
+        self.key_words["markup"] = True
+        self.key_words["background_color"] = (155, 0, 51, 53)
+        self.key_words["size_hint"] = (.25, .18)
+        self.key_words["font_size"] = "30"
 
     def build(self):
         '''
             Build the app type specified when instantiating the class object.
         '''
-#       return self.build(text=self.text)
-        return Label(text="Hello Kivy World")
+        self.kw()
+        # return self.__build__(**self.key_words)
+        # return Label(self.key_words)
+        return Label(text="Hello Kivy World!")
+
+    def kw(self):
+        print("Key Words ", self.key_words)
 
 
-# app = Generic("button", text="Welcome to LikeGeeks")
+app = Generic("label", text="Hello Kivy World")
+# app.kw()
+app.run()
 # Generic().run()
-LabelIt().run()
+# LabelIt().run()
 # ButtonUp().run()
 # KivyButton().run()

@@ -7,8 +7,13 @@ from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.lang import Builder
 from kivy.uix.label import Label
-# from kivy.uix.button import Button
-# from functools import partial
+from kivy.uix.button import Button
+from functools import partial
+
+label_text = '[u][color=ff0066][b]Better days[/b][/color]'\
+             ' are coming; They are called '\
+             '[i][color=ff9933]Saturday[/i] and '\
+             '[i]Sunday[/color][/i][/u]'
 
 Builder.load_string("""
 
@@ -38,7 +43,7 @@ class KivyButton(App, BoxLayout):
     def __init__(self):
         self.key_words = dict()
         # self.key_words["text"] = "blah blah blah"
-        self.key_words["text"] = "[u][color=ff0066][b]Better days[/b][/color] are coming; They are called [i][color=ff9933]Saturday[/i] and [i]Sunday[/color][/i][/u]"
+        self.key_words["text"] = label_text
         self.key_words["markup"] = True
         self.key_words["background_color"] = (155, 0, 51, 53)
         self.key_words["size_hint"] = (.25, .18)
@@ -61,14 +66,11 @@ class LabelIt(App):
         # self.text = "Hello Kivy World"
         self.key_words = dict()
         # self.key_words["text"] = "blah blah blah"
-        # self.key_words["text"] = "[u][color=ff0066][b]Better days[/b][/color] are coming; They are called [i][color=ff9933]Saturday[/i] and [i]Sunday[/color][/i][/u]"
-        self.key_words["text"] = '[u][color=ff0066][b]Welcome[/b][/color] To [i][color=ff9933]Like[/i]Geeks[/color][/u]'
+        self.key_words["text"] = label_text
         self.key_words["markup"] = True
         # self.key_words["background_color"] = (155, 0, 51, 53)
         self.key_words["size_hint"] = (.15, .18)
         self.key_words["font_size"] = "20"
-#   def __init__(self):
-#       self.text="Hello Kivy World"
         super().__init__()
 
     def build(self):
@@ -78,6 +80,7 @@ class LabelIt(App):
 class ButtonUp(App, BoxLayout):
     '''
         The window generator.
+    '''
     def __init(self):
         self.text = "Welcome to LikeGeeks"
         self.background_color = (155, 0, 51, 53)
@@ -99,11 +102,8 @@ class ButtonUp(App, BoxLayout):
         mybtn.bind(on_press=partial(self.disable, mybtn))
         mybtn.bind(on_press=partial(self.update, mybtn))
 
-        # return mybtn
-        return self
-    '''
-    def build(self):
-        return self
+        return mybtn
+        # return self
 
 
 class Generic(App):
@@ -125,38 +125,42 @@ class Generic(App):
             self.__build__ = Label
             self.set_args = self.__keywords_label__
 
-        self.text = text
         self.key_words = dict()
+        self.key_words["text"] = text
         self.set_args()
         super().__init__()
 
     def __keywords_button__(self):
-        self.key_words["markup"] = False
-
-    def __keywords_label__(self):
-        self.key_words["text"] = "[u][color=ff0066][b]Better days[/b][/color] are coming; They are called [i][color=ff9933]Saturday[/i] and [i]Sunday[/color][/i][/u]"
-        self.key_words["markup"] = True
         self.key_words["background_color"] = (155, 0, 51, 53)
         self.key_words["size_hint"] = (.25, .18)
         self.key_words["font_size"] = "30"
+        self.key_words["markup"] = True
+
+    def __keywords_label__(self):
+        self.key_words["text"] = '[u][color=ff0066][b]Better days[/b][/color]'\
+                                 ' are coming; They are called '\
+                                 '[i][color=ff9933]Saturday[/i] and '\
+                                 '[i]Sunday[/color][/i][/u]'
+        self.key_words["markup"] = True
 
     def build(self):
         '''
             Build the app type specified when instantiating the class object.
         '''
-        self.kw()
-        # return self.__build__(**self.key_words)
-        # return Label(self.key_words)
-        return Label(text="Hello Kivy World!")
+        mybtn = self.__build__(**self.key_words)
+        mybtn.bind(on_press=partial(self.disable, mybtn))
+        mybtn.bind(on_press=partial(self.update, mybtn))
+        return self
 
     def kw(self):
         print("Key Words ", self.key_words)
 
 
-app = Generic("label", text="Hello Kivy World")
-# app.kw()
-app.run()
+# app = Generic("label", text="Hello Kivy World")
+# app = Generic("button", text="Hello Ivy World")
+# app = ButtonUp()
+# app.run()
 # Generic().run()
 # LabelIt().run()
-# ButtonUp().run()
+ButtonUp().run()
 # KivyButton().run()

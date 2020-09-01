@@ -9,21 +9,13 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 
 kvWidget = '''
-
 MyWidget:
-
     orientation: 'vertical'
-
     canvas:
-
         Color:
-
             rgb: (255, 128, 0)
-
         Rectangle:
-
             size: self.size
-
             pos: self.pos
 '''
 

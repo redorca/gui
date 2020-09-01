@@ -1,2 +1,7 @@
 # created by virtualenv automatically
+
+syntax glob
+
 *
+!.gitignore
+!First/

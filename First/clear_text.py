@@ -1,10 +1,9 @@
 #!/home/hal/Project/gui/bin/python
 
 from kivy.app import App
-from kivy.uix.button import  Button
+from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
-
 
 
 class ClearApp(App):
@@ -27,4 +26,4 @@ class ClearApp(App):
         self.txt.text = ''
 
 
-ClearApp.run()
+ClearApp().run()
